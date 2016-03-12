@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/Administracion/commonTemplate.xhtml">
+            <ui:define name="content">
+                <p:growl id="sms" showDetail="true" sticky="true" /> 
+                <f:view>
+                    <h:form id="crudProf"> 
+                        <h1><h:outputText value="Crear o editar"/></h1>
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Nombre:" for="nombre" />
+                            <p:inputText id="nombre" value="#{crearProfesores.datosProfe.nombre}" title="Nombre" required="true" requiredMessage="El campo Nombre es Obligatorio."/>
+                            <p:outputLabel value="Apellidop:" for="apellidop" />
+                            <p:inputText id="apellidop" value="#{crearProfesores.datosProfe.apellidop}" title="Apellidop" required="true" requiredMessage="El campo Apellido Paterno es Obligatorio"/>
+                            <p:outputLabel value="Apellidom:" for="apellidom" />
+                            <p:inputText id="apellidom" value="#{crearProfesores.datosProfe.apellidom}" title="Apellidom" required="false"/>
+                            <p:outputLabel value="Direccion:" for="direccion" />
+                            <p:inputText id="direccion" value="#{crearProfesores.datosProfe.direccion}" title="Direccion" required="false"/>
+                            <p:outputLabel value="Email:" for="email" />
+                            <p:inputText id="email" value="#{crearProfesores.email}" title="Email" required="true" requiredMessage="El campo Email es Obligatorio" validatorMessage="El campo debe ser un email">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            <p:outputLabel value="Telefono:" for="telefono" />
+                            <p:inputText id="telefono" value="#{crearProfesores.datosProfe.telefono}" title="Telefono" required="true" requiredMessage="El campo Telefono es Obligatorio"/>
+                            <p:outputLabel value="Contrasena:" for="contrasena" />
+                            <p:inputText id="contrasena" value="#{crearProfesores.contrasena}" title="Contrasena" required="true" requiredMessage="El campo Contraseña es Obligatorio"/>
+                            <h:inputHidden value="#{crearProfesores.id}" required="false"/>
+                            <f:facet name="footer">
+                                <p:commandButton value="Guardar" action="#{crearProfesores.actionEditar()}" update="sms crudProf profesList"/>
+                                <p:commandButton value="Limpiar" update="crudProf" process="@this">
+                                    <p:resetInput target="crudProf" />
+                                </p:commandButton>
+                            </f:facet>
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+
+
+                <f:view>
+                    <h:form id="profesList">
+                        <h1><h:outputText value="Lista"/></h1>
+                        <p:dataTable value="#{crearProfesores.listProfesoresEscuela}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.datosUsuario.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellido Paterno"/>
+                                </f:facet>
+                                <h:outputText value="#{item.datosUsuario.apellidop}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellido Materno"/>
+                                </f:facet>
+                                <h:outputText value="#{item.datosUsuario.apellidom}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                <h:outputText value="#{item.usuario}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Dirección"/>
+                                </f:facet>
+                                <h:outputText value="#{item.datosUsuario.direccion}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Telefono"/>
+                                </f:facet>
+                                <h:outputText value="#{item.datosUsuario.telefono}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Usuario"/>
+                                </f:facet>
+                                <h:outputText value="#{item.usuario}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"/>
+                                </f:facet>
+                                <p:commandButton value="Editar" action="#{crearProfesores.actionLoad(item.idusuario)}" update="crudProf"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

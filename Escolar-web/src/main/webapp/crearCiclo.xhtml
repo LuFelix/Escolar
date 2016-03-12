@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Escolar</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create ciclo escolar"/></h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Inicio:" for="inicio" />
+                    <p:inputText id="inicio" value="#{crearCicloBean.cicloescolar.inicio}" title="Inicio" required="true" requiredMessage="The Inicio field is required.">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </p:inputText>
+                    <p:outputLabel value="Fin:" for="fin" />
+                    <p:inputText id="fin" value="#{crearCicloBean.cicloescolar.fin}" title="Fin" required="true" requiredMessage="The Fin field is required.">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </p:inputText>
+                    <f:facet name="footer">
+                        <p:commandButton value="Crear" action="#{crearCicloBean.crear()}" update="ciclos"/>
+                    </f:facet>
+                </p:panelGrid>
+            </h:form>
+            <h:form id="ciclos">
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{crearCicloBean.viewList()}" var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Inicio"/>
+                        </f:facet>
+                        <h:outputText value="#{item.inicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fin"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </f:view>
+
+    </h:body>
+</html>
+
